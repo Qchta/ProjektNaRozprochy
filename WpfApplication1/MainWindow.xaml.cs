@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace WpfApplication1
 {
@@ -21,15 +22,26 @@ namespace WpfApplication1
     public partial class MainWindow : Window
     {
         Point currentPoint;
+        int X = 100;
+        int Y = 100; // To leci do poprawy. Potrzebna klasa gracz
+        DispatcherTimer dispatcherTimer = new DispatcherTimer(); 
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        public void LiczPunkty()
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            DispatcherTimer dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Start();
+        }
+        //to je timer tu się dzieją rzeczy zależne od czasu
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+
         }
 
         private void SingePlayerButton_Click(object sender, RoutedEventArgs e)
@@ -42,7 +54,9 @@ namespace WpfApplication1
             if (e.ButtonState == MouseButtonState.Pressed)
                 currentPoint = e.GetPosition(this);
         }
-
+        //to był test rysowania na canvasie. zauważcie, że nie rysujemy tylko tworzymy obiekty potomne 
+        //a canvas sam sobie je rysuje.
+        //moim zdaniem trzeba będzie zrobić tablicę takich kwadratów i tylko zmieniać im kolory 
         private void PoleGry_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -66,5 +80,28 @@ namespace WpfApplication1
                 currentPoint = e.GetPosition(this);
             }
         }
+        //elo sterowanie tu jest
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Up)
+            {
+                this.Title = "You pressed F5";
+            }
+            else if (e.Key == Key.Down)
+            {
+                this.Title = "You pressed F5";
+            }
+            else if (e.Key == Key.Right)
+            {
+                this.Title = "You pressed F5";
+            }
+            else if (e.Key == Key.Left)
+            {
+                this.Title = "You pressed F5";
+            }
+        }
+
+
+
     }
 }

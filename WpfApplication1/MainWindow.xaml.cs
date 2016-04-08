@@ -18,12 +18,15 @@ namespace WpfApplication1
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
+    /// Polecam programować po angielsku. Ja już kilka polskich nazw natrzaskałem ale poprawię to
     /// </summary>
     public partial class MainWindow : Window
     {
         Point currentPoint;
         int X = 100;
         int Y = 100; // To leci do poprawy. Potrzebna klasa gracz
+        int deltaX;
+        int deltaY;
         DispatcherTimer dispatcherTimer = new DispatcherTimer(); 
 
         public MainWindow()
@@ -35,18 +38,35 @@ namespace WpfApplication1
         {
             DispatcherTimer dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0,0,100); //co ile mamy ruch 
             dispatcherTimer.Start();
         }
         //to je timer tu się dzieją rzeczy zależne od czasu
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
+            X += deltaX;
+            Y += deltaY;
+            this.Title = "działa";
+            Rectangle point = new Rectangle();
 
+            SolidColorBrush mySolidColorBrush = new SolidColorBrush();
+
+            mySolidColorBrush.Color = Color.FromArgb(255, 255, 255, 0);
+            point.Fill = mySolidColorBrush;
+            point.StrokeThickness = 0;
+
+            Canvas.SetTop(point, Y);
+            Canvas.SetLeft(point, X);
+
+            point.Width = 20;
+            point.Height = 20;
+
+            PoleGry.Children.Add(point);
         }
 
         private void SingePlayerButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            PoleGry.Children.RemoveRange(0, 100);
         }
 
         private void PoleGry_MouseDown(object sender, MouseButtonEventArgs e)
@@ -85,20 +105,28 @@ namespace WpfApplication1
         {
             if (e.Key == Key.Up)
             {
-                this.Title = "You pressed F5";
+                deltaY = -20;
             }
             else if (e.Key == Key.Down)
             {
-                this.Title = "You pressed F5";
+                deltaY = 20;
             }
             else if (e.Key == Key.Right)
             {
-                this.Title = "You pressed F5";
+                deltaX = 20;
             }
             else if (e.Key == Key.Left)
             {
-                this.Title = "You pressed F5";
+                deltaX = -20;
             }
+
+            //this.Title = "działa";
+        }
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            deltaX = deltaY = 0;
+
+            //this.Title = "niedziała";
         }
 
 

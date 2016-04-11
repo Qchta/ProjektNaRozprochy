@@ -51,7 +51,7 @@ namespace WpfApplication1
 
             SolidColorBrush mySolidColorBrush = new SolidColorBrush();
 
-            mySolidColorBrush.Color = Color.FromArgb(255, 0, 255, 0);
+            mySolidColorBrush.Color = Color.FromArgb(255, 0, 255, 255);
             point.Fill = mySolidColorBrush;
             point.StrokeThickness = 0;
 

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.IO;
 
 namespace WpfApplication1
 {
@@ -22,12 +23,9 @@ namespace WpfApplication1
     /// </summary>
     public partial class MainWindow : Window
     {
-        Point currentPoint;
-        int X = 100;
-        int Y = 100; // To leci do poprawy. Potrzebna klasa gracz
-        int deltaX;
-        int deltaY;
-        DispatcherTimer dispatcherTimer = new DispatcherTimer(); 
+        DispatcherTimer dispatcherTimer = new DispatcherTimer();
+        Player hero;
+        Game game;
 
         public MainWindow()
         {
@@ -38,98 +36,40 @@ namespace WpfApplication1
         {
             DispatcherTimer dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0,0,100); //co ile mamy ruch 
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0,0,70); //co ile milisekund mamy ruch 
             dispatcherTimer.Start();
+            var uriSource = new Uri(@"Textures/Postac.png", UriKind.Relative);//Tekstury wrzucać do folderu debug
+            BitmapImage heroSprite = new BitmapImage(uriSource);
+            hero = new Player(heroSprite,Color.FromArgb(255,0,200,50));
+            game = new Game();
+            foreach(Rectangle el in game.board)
+                PoleGry.Children.Add(el);
+            PoleGry.Children.Add(hero.hero);
         }
         //to je timer tu się dzieją rzeczy zależne od czasu
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            X += deltaX;
-            Y += deltaY;
-            this.Title = "działa";
-            Rectangle point = new Rectangle();
-
-            SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-
-            mySolidColorBrush.Color = Color.FromArgb(255, 0, 255, 0);
-            point.Fill = mySolidColorBrush;
-            point.StrokeThickness = 0;
-
-            Canvas.SetTop(point, Y);
-            Canvas.SetLeft(point, X);
-
-            point.Width = 20;
-            point.Height = 20;
-
-            PoleGry.Children.Add(point);
+            hero.Move();
+            game.board[hero.Y, hero.X].Fill = new SolidColorBrush(hero.color);
         }
 
         private void SingePlayerButton_Click(object sender, RoutedEventArgs e)
         {
-            PoleGry.Children.RemoveRange(0, 100);
+            //PoleGry.Children.RemoveRange(0, 100);
         }
 
-        private void PoleGry_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ButtonState == MouseButtonState.Pressed)
-                currentPoint = e.GetPosition(this);
-        }
-        //to był test rysowania na canvasie. zauważcie, że nie rysujemy tylko tworzymy obiekty potomne 
-        //a canvas sam sobie je rysuje.
-        //moim zdaniem trzeba będzie zrobić tablicę takich kwadratów i tylko zmieniać im kolory 
-        private void PoleGry_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                Rectangle point = new Rectangle();
-
-                SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-
-                mySolidColorBrush.Color = Color.FromArgb(255, 255, 255, 0);
-                point.Fill = mySolidColorBrush;
-                point.StrokeThickness = 0;
-
-                Canvas.SetTop(point, currentPoint.Y - currentPoint.Y%20);
-                Canvas.SetLeft(point, currentPoint.X - currentPoint.X % 20);
-
-                point.Width = 20;
-                point.Height = 20;
-
-                PoleGry.Children.Add(point);
-
-                currentPoint = e.GetPosition(this);
-            }
-        }
+        
         //elo sterowanie tu jest
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Up)
-            {
-                deltaY = -20;
-            }
+                hero.GoUp();
             else if (e.Key == Key.Down)
-            {
-                deltaY = 20;
-            }
+                hero.GoDown();
             else if (e.Key == Key.Right)
-            {
-                deltaX = 20;
-            }
+                hero.GoRight();
             else if (e.Key == Key.Left)
-            {
-                deltaX = -20;
-            }
-
-            //this.Title = "działa";
+                hero.GoLeft();
         }
-        private void Window_KeyUp(object sender, KeyEventArgs e)
-        {
-            deltaX = deltaY = 0;
-
-            //this.Title = "niedziała";
-        }
-
-
-
     }
 }

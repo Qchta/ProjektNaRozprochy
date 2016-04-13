@@ -18,8 +18,10 @@ namespace WpfApplication1
         public int deltaY;
         public Rectangle hero;
         public Color color;
+        public int points;
+        public int number;
 
-        public Player(BitmapImage sprite,Color color)
+        public Player(BitmapImage sprite,Color color, int number)
         {
             this.color = color;
             this.hero = new Rectangle();
@@ -32,13 +34,14 @@ namespace WpfApplication1
             this.Y = rand.Next(25);
             Canvas.SetTop(hero, Y * 20);
             Canvas.SetLeft(hero, X * 20);
+            this.points = 0;
+            this.number = number;
         }
 
         public void GoLeft()
         {
             deltaY = 0;
             deltaX = -1;
-
             hero.RenderTransform = new RotateTransform(270, hero.Width / 2, hero.Height / 2);
         }
 
@@ -63,7 +66,7 @@ namespace WpfApplication1
             hero.RenderTransform = new RotateTransform(0, hero.Width / 2, hero.Height / 2);
         }
 
-        public void Move()
+        public void Move(Game game, Box box)
         {
             if (X > 0 && deltaX < 0) X += deltaX;
             if (X < 34 && deltaX > 0) X += deltaX;
@@ -71,8 +74,13 @@ namespace WpfApplication1
             if (Y < 24 && deltaY > 0) Y += deltaY;
             Canvas.SetTop(hero, Y * 20);
             Canvas.SetLeft(hero, X * 20);
+            if (X == box.X && Y == box.Y)
+            {
+                points += game.Score(number);
+                box.RandomNewXY();
+            }
         }
-
+        
         public void Stop()
         {
             deltaX = deltaY = 0;

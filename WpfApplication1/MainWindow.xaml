@@ -5,12 +5,11 @@
         KeyDown="Window_KeyDown" Loaded="Window_Loaded">
     <Grid Margin="0,0,-6,-19">
         <Button x:Name="SingePlayerButton" Content="Single Player" HorizontalAlignment="Left" Margin="9,514,0,0" VerticalAlignment="Top" Width="171" Height="55" Click="SingePlayerButton_Click"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="187,514,0,0" VerticalAlignment="Top" Width="170" Height="55"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="361,514,0,0" VerticalAlignment="Top" Width="170" Height="55"/>
+        <Button x:Name="SecondPlayerButton" Content="Second Player" HorizontalAlignment="Left" Margin="187,514,0,0" VerticalAlignment="Top" Width="170" Height="55"/>
+        <Button Content="" HorizontalAlignment="Left" Margin="361,514,0,0" VerticalAlignment="Top" Width="170" Height="55"/>
+        <Button Content="" HorizontalAlignment="Left" Margin="538,514,0,0" VerticalAlignment="Top" Width="171" Height="55"/>
         <Canvas x:Name="PoleGry" HorizontalAlignment="Left" 
                 Height="500" Margin="9,9,0,0" VerticalAlignment="Top" 
                 Width="700" Background="#FFC3C3C3"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="538,514,0,0" VerticalAlignment="Top" Width="171" Height="55"/>
-
     </Grid>
 </Window>

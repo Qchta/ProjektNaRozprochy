@@ -12,21 +12,23 @@ namespace WpfApplication1
     class Game
     {
         public Rectangle[,] board;
+        public int[,] secondBoard;
 
         public Game()
         {
             board = new Rectangle[25,35];
-
+            secondBoard = new int[25, 35];
 
             for (int i = 0; i < 25;i++ )
             {
                 for (int j = 0; j < 35; j++)
                 {
                     board[i, j] = new Rectangle();
+                    secondBoard[i, j] = 0;
 
                     SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-
                     mySolidColorBrush.Color = Color.FromArgb(0,0,0,0);
+
                     board[i, j].Fill = mySolidColorBrush;
                     board[i, j].StrokeThickness = 0;
 
@@ -38,6 +40,30 @@ namespace WpfApplication1
                     
                 }
             }
+        }
+
+        public int Score(int number)
+        {
+            int score = 0;
+
+            for (int i = 0; i < 25; i++)
+            {
+                for (int j = 0; j < 35; j++)
+                {
+                    if (secondBoard[i, j] == number)
+                    {
+                        SolidColorBrush mySolidColorBrush = new SolidColorBrush();
+                        mySolidColorBrush.Color = Color.FromArgb(0, 0, 0, 0);
+
+                        board[i, j].Fill = mySolidColorBrush;
+                        secondBoard[i, j] = 0;
+
+                        score++;
+                    }
+                }
+            }
+
+            return score;
         }
     }
 }

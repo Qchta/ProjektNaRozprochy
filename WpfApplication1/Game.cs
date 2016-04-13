@@ -35,6 +35,7 @@ namespace WpfApplication1
 
                     board[i, j].Width = 20;
                     board[i, j].Height = 20;
+                    
                 }
             }
         }

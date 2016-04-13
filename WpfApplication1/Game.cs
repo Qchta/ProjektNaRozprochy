@@ -13,6 +13,7 @@ namespace WpfApplication1
     {
         public Rectangle[,] board;
         public int[,] secondBoard;
+        public bool runs = false;
 
         public Game()
         {

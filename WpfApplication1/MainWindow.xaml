@@ -1,15 +1,17 @@
 ﻿<Window x:Class="WpfApplication1.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="617.232" Width="734.794" ResizeMode="NoResize" Left="100" Top="100"
-        KeyDown="Window_KeyDown" Loaded="Window_Loaded">
+        Title="MainWindow" Height="520" Width="720" ResizeMode="NoResize" Left="100" Top="100"
+        KeyDown="Window_KeyDown" Loaded="Window_Loaded" WindowStyle="None" Background="Black">
     <Grid Margin="0,0,-6,-19">
-        <Button x:Name="SingePlayerButton" Content="Single Player" HorizontalAlignment="Left" Margin="9,514,0,0" VerticalAlignment="Top" Width="171" Height="55" Click="SingePlayerButton_Click"/>
-        <Button x:Name="SecondPlayerButton" Content="Second Player" HorizontalAlignment="Left" Margin="187,514,0,0" VerticalAlignment="Top" Width="170" Height="55"/>
-        <Button Content="" HorizontalAlignment="Left" Margin="361,514,0,0" VerticalAlignment="Top" Width="170" Height="55"/>
-        <Button Content="" HorizontalAlignment="Left" Margin="538,514,0,0" VerticalAlignment="Top" Width="171" Height="55"/>
         <Canvas x:Name="PoleGry" HorizontalAlignment="Left" 
                 Height="500" Margin="9,9,0,0" VerticalAlignment="Top" 
-                Width="700" Background="#FFC3C3C3"/>
+                Width="700" Background="#FFB9C0C3">
+            <Label x:Name="firststPlayerPoints" Panel.ZIndex="1" Content="0" Height="80" Width="200" Background="#00000000" Foreground="#FF649664" FontSize="62" FontFamily="Lobster" FontWeight="Bold"/>
+            <Label x:Name="secondPlayerPoints" Panel.ZIndex="1" HorizontalContentAlignment="Right" Content="0" Height="80" Width="200" Background="#00000000" Foreground="#FF646496" FontSize="62" FontFamily="Lobster" FontWeight="Bold" Canvas.Left="501"/>
+            <Button x:Name="StartGameButton" Content="Single Player" Canvas.Left="275" Canvas.Top="340" Width="150" Height="50" BorderBrush="#FFFFBF14" Foreground="#FFFFBF14" FontFamily="Lobster" Panel.ZIndex="1" Background="#FF225ABB" Click="StartGameButton_Click"/>
+            <Button x:Name="QuitButton" Content="Quit" Canvas.Left="275" Canvas.Top="400" Width="150" Height="50" Background="#FF225ABB" BorderBrush="#FFFFBF14" Foreground="#FFFFBF14" FontFamily="Lobster" Click="QuitButton_Click" Panel.ZIndex="1"/>
+            <Label x:Name="TitleLabel" Content="Pendzelki" HorizontalContentAlignment="Center" Canvas.Left="100" Canvas.Top="105" Height="150" Width="500" FontFamily="Lobster" FontSize="100"/>
+        </Canvas>
     </Grid>
 </Window>
